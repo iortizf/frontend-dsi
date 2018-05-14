@@ -1,0 +1,17 @@
+<form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
+  <div class="form-container">
+    <div class="row columns">
+      <h1>Login</h1>
+      <label>Username
+        <input type="text" #usernameobj appAutofocus formControlName="username">
+        <div class="alert" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">{{ usernameAlert }}</div>
+      </label>
+      <label>Password
+        <input type="password" formControlName="password">
+        <div class="alert"  *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">{{ passwordAlert }}</div>
+      </label>  
+      <div class="callout warning" *ngIf="loginError"> {{ loginAlert }}</div>   
+      <input type="submit" class="button expanded" value="Login" [disabled]="!rForm.valid">
+    </div>
+  </div>
+</form>
