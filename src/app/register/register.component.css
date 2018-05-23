@@ -1,0 +1,11 @@
+.example-card {
+    max-width: 400px;
+  }
+  .example-header-image {
+    background-image: url('../../elektra.png');
+    background-size: cover;
+  }
+  mat-card {    
+    max-width: 80%;    
+    margin: 2em auto;          
+  }

@@ -1,0 +1,24 @@
+<mat-card class="example-card">
+    <form [formGroup]="newLoanForm" (ngSubmit)="addLoan(newLoanForm.value)">
+        <mat-card-header>
+            <mat-card-title>DSI</mat-card-title>
+            <mat-card-subtitle>Registrar un nuevo prestamo</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Monto" formControlName="monto" #newLoanInput>
+                <mat-error *ngIf="f.monto.errors && f.monto.errors.required">Monto es requerido</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Plazo" formControlName="plazo">
+                <mat-error *ngIf="f.plazo.errors && f.plazo.errors.required">Plazo es requerido</mat-error>
+            </mat-form-field>
+            <br>
+        </mat-card-content>
+        <mat-card-actions style="text-align: right">
+            <button mat-raised-button color="primary" type="button" (click)="newLoanForm.reset()" >Limpiar</button>
+            <button mat-raised-button color="primary">Crear préstamo</button>
+        </mat-card-actions>
+    </form>
+</mat-card>

@@ -1,17 +1,31 @@
-<form [formGroup]="rForm" (ngSubmit)="addPost(rForm.value)">
-  <div class="form-container">
-    <div class="row columns">
-      <h1>Login</h1>
-      <label>Username
-        <input type="text" #usernameobj appAutofocus formControlName="username">
-        <div class="alert" *ngIf="!rForm.controls['username'].valid && rForm.controls['username'].touched">{{ usernameAlert }}</div>
-      </label>
-      <label>Password
-        <input type="password" formControlName="password">
-        <div class="alert"  *ngIf="!rForm.controls['password'].valid && rForm.controls['password'].touched">{{ passwordAlert }}</div>
-      </label>  
-      <div class="callout warning" *ngIf="loginError"> {{ loginAlert }}</div>   
-      <input type="submit" class="button expanded" value="Login" [disabled]="!rForm.valid">
-    </div>
-  </div>
-</form>
+<mat-card class="example-card">
+  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>DSI</mat-card-title>
+      <mat-card-subtitle>Login page</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field style="display: block">
+        <input matInput placeholder="Usuario" formControlName="email" #loginInput>
+        <mat-error *ngIf="f.email.errors && f.email.errors.required">El email es requerido</mat-error>
+        <mat-error *ngIf="f.email.errors && f.email.errors.email">El email no es valido</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field style="display: block">
+        <input matInput placeholder="Contraseña" formControlName="pwd" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <mat-error *ngIf="f.pwd.errors && f.pwd.errors.required">Contraseña es requerido</mat-error>
+        <mat-error *ngIf="loginError">Usuario o contraseña son incorrectas!!</mat-error>
+      </mat-form-field>
+      <br>
+      <section class="example-section">
+        <mat-checkbox color="primary">Recordarme</mat-checkbox>
+      </section>
+    </mat-card-content>
+    <mat-card-actions style="text-align: right">
+      <button mat-button color="primary" type="button" (click)="register()"  >Registrar usuario</button>
+      <button mat-raised-button color="primary">Entrar</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

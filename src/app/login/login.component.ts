@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { LoginService } from '../service/login.service';
+import { MatSnackBar } from '@angular/material';
+
 
 @Component({
   selector: 'app-login',
@@ -10,54 +11,51 @@ import { LoginService } from '../service/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  @ViewChild('loginInput') loginInput: ElementRef<HTMLInputElement>;
-
-  statuslogin: any;
-  focusin: boolean = true;
-  rForm: FormGroup;
-  post: any;
-  usernameAlert: string = "Please fill username";
-  passwordAlert: string = "Please fill password";
-  loginAlert: string;
-  loginError: boolean = false;
-  returnUrl: string;
+  loginForm: FormGroup;
+  loginError:boolean=false;
+  hide:boolean=true;
 
   constructor(
-    private route: ActivatedRoute,
     private fb: FormBuilder,
     private loginService: LoginService,
-    public router: Router
+    public router: Router,
+    public snackBar: MatSnackBar
   ) {
-    this.rForm = fb.group({
-      'username': [null, Validators.required],
-      'password': [null, Validators.required],
+    this.loginForm = fb.group({
+      email: [null, Validators.compose([Validators.required, Validators.email])],
+      pwd: [null, Validators.required],
     });
   }
+
+  get f(){return this.loginForm.controls;}
+
+
+  @ViewChild('loginInput') loginInput: ElementRef<HTMLInputElement>
+
   ngOnInit() {
     this.loginService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/index';
   }
 
   ngAfterViewInit() {
     this.loginInput.nativeElement.focus();
   }
 
-  addPost(post) {
-    this.loginService.login(post).subscribe(
+  register(){
+    this.router.navigate(["register"]);
+  }
+
+  login(data) {
+    console.log("Haciendo login");
+    console.log("Usuario="+data.email +" Contraseña="+data.pwd);
+    this.loginService.login(data.email.trim(), data.pwd.trim()).subscribe(
       res => {
-        if (res.status == true) {
-          this.router.navigate([this.returnUrl]);
-        } else {
-          this.loginError = true
-          this.loginAlert = res.message;
-        }
+        this.router.navigate(["home"]);
       },
       err => {
-        return err;
-
+        this.snackBar.open("Usuario o contraseña son incorrectos", "OK", {
+          duration: 3000,
+        });
       }
     );
-
   }
 }

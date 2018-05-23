@@ -1,0 +1,51 @@
+<mat-card class="example-card">
+    <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>DSI</mat-card-title>
+            <mat-card-subtitle>Registration Page</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Nombre" formControlName="name" #registerInput>
+                <mat-error *ngIf="f.name.errors && f.name.errors.required">Nombre es requerido</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Apellido paterno" formControlName="apaterno">
+                <mat-error *ngIf="f.apaterno.errors && f.apaterno.errors.required">Campo requerido</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Apellido materno" formControlName="amaterno">
+                <mat-error *ngIf="f.amaterno.errors && f.amaterno.errors.required">Campo requerido</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Correo electrónico" formControlName="email" #loginInput>
+                <mat-error *ngIf="f.email.errors && f.email.errors.required">El email es requerido</mat-error>
+                <mat-error *ngIf="f.email.errors && f.email.errors.email">El email no es valido</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Contraseña" formControlName="pwd" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="f.pwd.errors && f.pwd.errors.required">Contraseña es requerida</mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field style="display: block">
+                <input matInput placeholder="Repetir contraseña" formControlName="pwdr" [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf="f.pwdr.errors && f.pwdr.errors.required">Contraseña es requerida</mat-error>
+            </mat-form-field><br><br>
+            <section class="example-section">
+                <mat-checkbox color="primary">Estoy de acuerdo con los terminos y condiciones</mat-checkbox>
+            </section>
+        </mat-card-content>
+        <mat-card-actions style="text-align: right">
+            <a mat-raised-button color="primary" routerLink="/login">Salir</a>
+            <button mat-raised-button color="primary" type="button" (click)="registerForm.reset()" >Limpiar</button>
+            <button mat-raised-button color="primary">Registrarme</button>
+        </mat-card-actions>
+    </form>
+</mat-card>
